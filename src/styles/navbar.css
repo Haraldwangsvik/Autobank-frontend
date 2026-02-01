@@ -1,9 +1,11 @@
 .active-link::after {
   content: "";
   position: absolute;
-  bottom: 0.5rem;
+  bottom: 0.25rem;
   left: 50%;
   transform: translateX(-50%);
-  width: 90%; /* Adjust the width as needed */
-  border-bottom: 2px solid white; /* Adjust the border size and color as needed */
+  width: 80%;
+  height: 3px;
+  background-color: #F9B759;
+  border-radius: 2px;
 }

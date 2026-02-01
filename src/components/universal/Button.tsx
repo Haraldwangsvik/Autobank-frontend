@@ -1,6 +1,6 @@
 interface Props {
   title: string;
-  color: "blue" | "white" | "orange" | "green" | "darkGreen";
+  color: "blue" | "white" | "orange" | "green" | "darkGreen" | "primary" | "secondary";
   size?: "small";
   icon?: React.ReactNode;
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
@@ -12,15 +12,17 @@ const Button = (props: Props) => {
   let sizeClasses = "";
 
   const colorClassesMap = {
-    green: "bg-[#84BBA3] text-black",
-    blue: "bg-blue-300",
-    orange: "bg-orange-300",
-    white: "bg-white text-black",
-    darkGreen: "bg-[#2D433A] text-white",
+    green: "bg-online-blue-300 text-online-blue-900 hover:bg-online-blue-200",
+    blue: "bg-online-blue-400 text-white hover:bg-online-blue-300",
+    orange: "bg-online-orange text-online-blue-900 hover:bg-online-orange-400",
+    white: "bg-white text-online-blue hover:bg-gray-100",
+    darkGreen: "bg-online-blue-700 text-white hover:bg-online-blue-600",
+    primary: "bg-online-blue text-white hover:bg-online-blue-600",
+    secondary: "bg-online-orange text-online-blue-900 hover:bg-online-orange-400",
   };
 
   // Use the `props.color` to dynamically get the class, with a fallback if needed.
-  let colorClasses = colorClassesMap[props.color] || "";
+  let colorClasses = colorClassesMap[props.color] || colorClassesMap.primary;
 
   // Determine button size
   if (props.size === "small") {
@@ -30,7 +32,7 @@ const Button = (props: Props) => {
   }
 
   // Combine class names, ensuring `props.className` is applied last for higher precedence
-  const className = `flex items-center justify-center p-2 h-[40px] justify-self-end relative z-20 font-medium text-center transition-all shadow-sm focus:ring focus:ring-primary-200 inline-flex items-center gap-1.5 ${colorClasses} ${sizeClasses} rounded-[15px] ${
+  const className = `flex items-center justify-center p-2 h-[40px] justify-self-end relative z-20 font-medium text-center transition-all duration-200 shadow-sm focus:ring-2 focus:ring-online-orange focus:ring-offset-2 inline-flex items-center gap-1.5 ${colorClasses} ${sizeClasses} rounded-lg ${
     props.className || ""
   }`;
 

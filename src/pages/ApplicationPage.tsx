@@ -1,8 +1,6 @@
-import Navbar from "../components/universal/Navbar";
 import { useState } from "react";
 import FileUpload from "../components/form/FileUpload";
 import { fileToBase64 } from "../utils/fileutils";
-// import { submitEconomicRequest } from "../api/formsAPI";
 
 interface Application {
   field1: string;
@@ -47,118 +45,112 @@ const ApplicationPage = () => {
       id: 0,
     };
 
-    // const res: Response = await submitEconomicRequest(
-    //   getAccessTokenSilently,
-    //   application
-    // );
-
-    alert("Søknad sendt inn!");
+    alert("Soknad sendt inn!");
     setDisableSubmit(false);
   };
 
   return (
-    <div className="min-h-screen pb-[200px]">
-      <div className="max-w-2xl ml-auto mr-auto px-10">
-        <div className="flex justify-center gap-[50px] mt-[60px]">
-          <h1 className="text-5xl text-white text-center self-center mb-auto mt-auto font-thin">
-            Søknadsskjema
+    <div className="min-h-screen pb-24">
+      <div className="max-w-2xl mx-auto px-6">
+        {/* Header */}
+        <div className="text-center pt-12 pb-8">
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">
+            Soknadsskjema
           </h1>
-          <img
-            src={"../../../resources/images/receiptpageimage.png"}
-            className="w-[130px] hidden md:flex"
-          ></img>
-        </div>
-        <div className="mt-[30px]">
-          <h1 className="text-3xl text-white text-center self-center font-thin">
-            Beskrivelse
-          </h1>
-        </div>
-        <div className="flex-col mt-[20px]">
-          <p className="text-white w-full text-left text-l mb-[5px]">
-            Forklar hvem dere er og hva pengene skal brukes til
+          <p className="text-online-blue-200">
+            Sok om okonomisk stotte fra Online
           </p>
-          <textarea
-            name=""
-            id=""
-            className="w-full border-2 border-gray-300 rounded-lg p-4 flex flex-col items-center justify-center h-[120px] bg-white"
-            onChange={(e) =>
-              setFormdata({ ...formdata, field1: e.target.value })
-            }
-          ></textarea>
-        </div>
-        <div className="flex-col mt-[20px]">
-          <p className="text-white w-full text-left text-l mb-[5px]">
-            Hvordan går midlene Onlinere til gode?
-          </p>
-          <textarea
-            name=""
-            id=""
-            className="w-full border-2 border-gray-300 rounded-lg p-4 flex flex-col items-center justify-center h-[120px] bg-white"
-            onChange={(e) =>
-              setFormdata({ ...formdata, field2: e.target.value })
-            }
-          ></textarea>
-        </div>
-        <div className="flex-col mt-[20px]">
-          <p className="text-white w-full text-left text-l mb-[5px]">
-            Aktivitetsplan
-          </p>
-          <textarea
-            name=""
-            id=""
-            className="w-full border-2 border-gray-300 rounded-lg p-4 flex flex-col items-center justify-center h-[120px] bg-white"
-            onChange={(e) =>
-              setFormdata({ ...formdata, field3: e.target.value })
-            }
-          ></textarea>
         </div>
 
-        <div className="text-white flex justify-center gap-10 mt-[20px]">
-          <div className="flex-col w-full">
-            <p className="text-left tracking-wide">Beløp</p>
-            <input
-              placeholder={"530"}
-              className="text-black p-3 rounded w-full"
-              onChange={(e) =>
-                setFormdata({ ...formdata, amount: parseInt(e.target.value) })
-              }
-            ></input>
+        {/* Form Card */}
+        <div className="bg-online-blue-600/30 backdrop-blur-sm rounded-xl border border-online-blue-500/30 p-6 md:p-8">
+          <h2 className="text-xl font-semibold text-white mb-6">Beskrivelse</h2>
+
+          <div className="space-y-6">
+            <div>
+              <label className="block text-white text-sm font-medium mb-2">
+                Forklar hvem dere er og hva pengene skal brukes til
+              </label>
+              <textarea
+                className="w-full px-4 py-3 rounded-lg bg-white text-online-blue-900 placeholder-gray-400 focus:ring-2 focus:ring-online-orange focus:outline-none h-28 resize-none"
+                onChange={(e) =>
+                  setFormdata({ ...formdata, field1: e.target.value })
+                }
+              />
+            </div>
+
+            <div>
+              <label className="block text-white text-sm font-medium mb-2">
+                Hvordan gar midlene Onlinere til gode?
+              </label>
+              <textarea
+                className="w-full px-4 py-3 rounded-lg bg-white text-online-blue-900 placeholder-gray-400 focus:ring-2 focus:ring-online-orange focus:outline-none h-28 resize-none"
+                onChange={(e) =>
+                  setFormdata({ ...formdata, field2: e.target.value })
+                }
+              />
+            </div>
+
+            <div>
+              <label className="block text-white text-sm font-medium mb-2">
+                Aktivitetsplan
+              </label>
+              <textarea
+                className="w-full px-4 py-3 rounded-lg bg-white text-online-blue-900 placeholder-gray-400 focus:ring-2 focus:ring-online-orange focus:outline-none h-28 resize-none"
+                onChange={(e) =>
+                  setFormdata({ ...formdata, field3: e.target.value })
+                }
+              />
+            </div>
+
+            <div>
+              <label className="block text-white text-sm font-medium mb-2">
+                Belop (kr)
+              </label>
+              <input
+                type="text"
+                placeholder="5000"
+                className="w-full px-4 py-3 rounded-lg bg-white text-online-blue-900 placeholder-gray-400 focus:ring-2 focus:ring-online-orange focus:outline-none"
+                onChange={(e) =>
+                  setFormdata({ ...formdata, amount: parseInt(e.target.value) || 0 })
+                }
+              />
+            </div>
           </div>
-        </div>
 
-        <div className="text-white mb-[10px] mt-[10px]">
-          <h1 className="text-3xl text-white text-center self-center mt-[20px] font-thin mb-[10px]">
-            Vedlegg
-          </h1>
-          <p>Last opp eventuelle filer/bilder av budsjett eller annet</p>
-        </div>
-        <div className="flex-col">
-          <p className="text-white w-full text-left text-l mb-[5px]">Vedlegg</p>
-          <FileUpload files={attachments} onFileChange={onFileChange} />
-        </div>
+          {/* Attachments Section */}
+          <div className="border-t border-online-blue-500/30 pt-6 mt-6">
+            <h2 className="text-xl font-semibold text-white mb-2">Vedlegg</h2>
+            <p className="text-online-blue-200 text-sm mb-4">
+              Last opp eventuelle filer/bilder av budsjett eller annet
+            </p>
+            <FileUpload files={attachments} onFileChange={onFileChange} />
+          </div>
 
-        <div className="flex-col mt-[20px]">
-          <p className="text-white w-full text-left text-l mb-[5px]">
-            Kommentarer
-          </p>
-          <textarea
-            name=""
-            id=""
-            className="w-full border-2 border-gray-300 rounded-lg p-4 flex flex-col items-center justify-center h-[120px] bg-white"
-            onChange={(e) =>
-              setFormdata({ ...formdata, comments: e.target.value })
-            }
-          ></textarea>
-        </div>
+          {/* Comments Section */}
+          <div className="mt-6">
+            <label className="block text-white text-sm font-medium mb-2">
+              Kommentarer (valgfritt)
+            </label>
+            <textarea
+              className="w-full px-4 py-3 rounded-lg bg-white text-online-blue-900 placeholder-gray-400 focus:ring-2 focus:ring-online-orange focus:outline-none h-28 resize-none"
+              placeholder="Legg til eventuelle kommentarer..."
+              onChange={(e) =>
+                setFormdata({ ...formdata, comments: e.target.value })
+              }
+            />
+          </div>
 
-        <div>
-          <button
-            disabled={disableSubmit}
-            className="p-3 bg-white rounded mt-[30px] hover:bg-gray-200"
-            onClick={submitform}
-          >
-            Send skjema
-          </button>
+          {/* Submit Button */}
+          <div className="mt-8 text-center">
+            <button
+              disabled={disableSubmit}
+              onClick={submitform}
+              className="bg-online-orange text-online-blue-900 px-8 py-3 rounded-lg font-semibold hover:bg-online-orange-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {disableSubmit ? "Sender..." : "Send inn soknad"}
+            </button>
+          </div>
         </div>
       </div>
     </div>

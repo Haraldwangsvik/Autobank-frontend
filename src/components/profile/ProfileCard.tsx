@@ -1,41 +1,49 @@
 import React from "react";
 import profilePicture from "../../resources/profile/profile_pic.png";
-import mailIcon from "../../icons/mail_icon.png";
-import groupIcon from "../../icons/group_icon.png";
-import { fetchCommittees, fetchUserComittees } from "../../api/baseAPI";
+import { fetchUserComittees } from "../../api/baseAPI";
 import { useQuery } from "@tanstack/react-query";
+import { EnvelopeIcon, UserGroupIcon } from "@heroicons/react/24/outline";
 
 const ProfileCard = () => {
-
-
-  const { data , isError } = useQuery({
+  const { data, isError } = useQuery({
     queryKey: ["committees"],
     queryFn: () => fetchUserComittees(),
   });
 
-  const capitalizeFirstLetter = (str: string) => {
-    return str.charAt(0).toUpperCase() + str.slice(1);
-  };
-
   return (
-    <div className="w-64 bg-[#669782] text-white p-8 min-h-max rounded-xl ml-5">
+    <div className="bg-online-blue-600/30 backdrop-blur-sm rounded-xl border border-online-blue-500/30 p-6">
       <div className="flex flex-col items-center">
-        <img src={profilePicture} alt="" />
-        <h2 className="text-2xl mb-2 mt-5">{data && data.name}</h2>
-        <div className="flow-root my-3">
-          <img src={mailIcon} alt="" className="float-left size-5 mr-2"/>
-          <p className="text-sm float-right">{data && data.email}</p>
+        <div className="w-20 h-20 rounded-full bg-online-blue-500 flex items-center justify-center mb-4 overflow-hidden">
+          <img src={profilePicture} alt="Profilbilde" className="w-full h-full object-cover" />
         </div>
-        <div className="flow-root mb-2">
-          <img src={groupIcon} alt="" className="float-left size-5 mr-2"/>
-          {data && data.committees.length ? data.committees.map((committee: any, index: number) => {
-              const capitalizedName = committee.charAt(0).toUpperCase() + committee.slice(1);
-              return (
-                  <span key={index}>
-                      {capitalizedName}{index < data.committees.length - 1 && ", "}
-                  </span>
-              );
-          }) : null}
+        
+        <h2 className="text-xl font-semibold text-white mb-4">
+          {data && data.name}
+        </h2>
+
+        <div className="w-full space-y-3">
+          <div className="flex items-center gap-3 text-online-blue-200">
+            <EnvelopeIcon className="w-5 h-5 flex-shrink-0" />
+            <span className="text-sm truncate">{data && data.email}</span>
+          </div>
+          
+          <div className="flex items-start gap-3 text-online-blue-200">
+            <UserGroupIcon className="w-5 h-5 flex-shrink-0 mt-0.5" />
+            <span className="text-sm">
+              {data && data.committees.length
+                ? data.committees.map((committee: any, index: number) => {
+                    const capitalizedName =
+                      committee.charAt(0).toUpperCase() + committee.slice(1);
+                    return (
+                      <span key={index}>
+                        {capitalizedName}
+                        {index < data.committees.length - 1 && ", "}
+                      </span>
+                    );
+                  })
+                : "Ingen komiteer"}
+            </span>
+          </div>
         </div>
       </div>
     </div>

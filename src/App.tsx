@@ -18,7 +18,7 @@ function App() {
 
   return (
    
-      <div className="App bg-[#2e6e53]">
+      <div className="App bg-online-blue">
         <Navbar />
         <Router/>
              <Footer />

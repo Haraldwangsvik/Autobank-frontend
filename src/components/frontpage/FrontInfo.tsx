@@ -1,15 +1,14 @@
-
-
 export default function FrontInfo() {
   return (
-    <div className=" bg-[#282c34] w-full h-screen">
-      <div className="text-center text-white absolute w-[100%] top-[50%] font-bold text-4xl">
-        <span className="block">Velkommen til Autobank!</span>
-        {/* <span className="block text-2xl">Søk om støtte eller</span> */}
-        <span className="block text-2xl px-2">Her kan du legge inn kvitteringer for utlegg</span>
-  
+    <div className="bg-online-blue-800 w-full min-h-[50vh] flex items-center justify-center py-16">
+      <div className="text-center text-white px-6 max-w-3xl">
+        <h2 className="text-4xl md:text-5xl font-bold mb-4 text-balance">
+          Velkommen til Autobank!
+        </h2>
+        <p className="text-xl md:text-2xl text-online-blue-200">
+          Her kan du legge inn kvitteringer for utlegg
+        </p>
       </div>
-
     </div>
   );
 }

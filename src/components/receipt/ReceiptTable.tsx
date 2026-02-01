@@ -1,7 +1,6 @@
-import React, { useState } from "react";
-import ReceiptRow from "../../components/receipt/ReceiptRow";
+import React from "react";
+import ReceiptRow from "./ReceiptRow";
 import { Receipt_Info } from "../../api/adminReceiptAPI";
-import Button from "../../components/universal/Button";
 import { Oval } from "react-loader-spinner";
 
 interface ReceiptTableProps {
@@ -15,7 +14,7 @@ const ReceiptTable = ({
   receipts,
   receiptsLoading,
   receiptStatus,
-  setReceiptStatus
+  setReceiptStatus,
 }: ReceiptTableProps) => {
   const selectedButton =
     receiptStatus === "NONE"
@@ -27,7 +26,7 @@ const ReceiptTable = ({
   const handleSetActive = () => {
     setReceiptStatus(receiptStatus === "NONE" ? null : "NONE");
   };
-  
+
   const handleSetHistory = () => {
     setReceiptStatus(receiptStatus === "DONE" ? null : "DONE");
   };
@@ -43,59 +42,74 @@ const ReceiptTable = ({
 
   return (
     <div>
-      {/* Buttons Section */}
-      <div className="w-full flex flex-row justify-start items-center max-w-[1100px] ml-auto mr-auto pl-5 pt-5 space-x-4">
-        <Button
-          title="Aktive"
-          color={selectedButton === "active" ? "green" : "darkGreen"}
+      {/* Tab Buttons */}
+      <div className="flex gap-2 mb-4">
+        <button
           onClick={handleSetActive}
-          className="w-[120px] rounded-t-lg rounded-b-none"
-        />
-        <Button
-          title="Historikk"
-          color={selectedButton === "history" ? "green" : "darkGreen"}
+          className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+            selectedButton === "active"
+              ? "bg-online-orange text-online-blue-900"
+              : "bg-online-blue-600 text-white hover:bg-online-blue-500"
+          }`}
+        >
+          Aktive
+        </button>
+        <button
           onClick={handleSetHistory}
-          className="w-[120px] rounded-t-lg rounded-b-none"
-        />
+          className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+            selectedButton === "history"
+              ? "bg-online-orange text-online-blue-900"
+              : "bg-online-blue-600 text-white hover:bg-online-blue-500"
+          }`}
+        >
+          Historikk
+        </button>
       </div>
 
-      <hr className="max-w-[1100px] ml-auto mr-auto" />
+      <div className="border-b border-online-blue-500/30 mb-4" />
 
-      <div className="min-h-[280px] flex justify-center items-center">
+      {/* Table Content */}
+      <div className="min-h-[280px]">
         {receiptsLoading ? (
-            <Oval height={40} />
+          <div className="flex justify-center items-center h-64">
+            <Oval height={40} color="#F9B759" secondaryColor="#0D5474" />
+          </div>
         ) : receipts && receipts.length > 0 ? (
-          <table className="w-full border-separate border-spacing-y-3 max-w-[1100px] ml-auto mr-auto">
-            <thead>
-              <tr>
-                <th></th>
-                <th className="text-left text-white text-xl font-normal hidden md:table-cell">
-                  Komité
-                </th>
-                <th className="text-left text-white text-xl font-normal">
-                  Anledning
-                </th>
-                <th className="text-left text-white text-xl font-normal hidden lg:table-cell">
-                  Type
-                </th>
-                <th className="text-left text-white text-xl font-normal hidden lg:table-cell">
-                  Kommentar
-                </th>
-                <th className="text-middle w-[110px] text-white text-xl font-normal">
-                  Dato
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {sortedReceipts.map((receipt) => (
-                <ReceiptRow key={receipt.receiptId} receipt={receipt}/>
-              ))}
-            </tbody>
-          </table>
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b border-online-blue-500/30">
+                  <th className="w-12"></th>
+                  <th className="text-left text-online-blue-200 text-sm font-medium py-3 hidden md:table-cell">
+                    Komite
+                  </th>
+                  <th className="text-left text-online-blue-200 text-sm font-medium py-3">
+                    Anledning
+                  </th>
+                  <th className="text-left text-online-blue-200 text-sm font-medium py-3 hidden lg:table-cell">
+                    Type
+                  </th>
+                  <th className="text-left text-online-blue-200 text-sm font-medium py-3 hidden lg:table-cell">
+                    Kommentar
+                  </th>
+                  <th className="text-center text-online-blue-200 text-sm font-medium py-3 w-24">
+                    Dato
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {sortedReceipts.map((receipt) => (
+                  <ReceiptRow key={receipt.receiptId} receipt={receipt} />
+                ))}
+              </tbody>
+            </table>
+          </div>
         ) : (
-          <p className="text-middle text-white text-xl font-normal pt-5">
-            Ingen kvitteringer å vise
-          </p>
+          <div className="flex justify-center items-center h-64">
+            <p className="text-online-blue-200 text-lg">
+              Ingen kvitteringer a vise
+            </p>
+          </div>
         )}
       </div>
     </div>

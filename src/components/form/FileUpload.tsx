@@ -1,4 +1,5 @@
-import React, { useState, ChangeEvent, DragEvent } from "react";
+import React, { ChangeEvent, DragEvent } from "react";
+import { CloudArrowUpIcon, XMarkIcon } from "@heroicons/react/24/outline";
 
 interface FileUploadProps {
   files: File[];
@@ -30,42 +31,55 @@ const FileUpload = ({ files, onFileChange, multiple = true }: FileUploadProps) =
   return (
     <div>
       <div
-        className="border-2 border-gray-300 rounded-lg p-4 flex flex-col items-center justify-center h-[120px] bg-white"
+        className="border-2 border-dashed border-online-blue-400 rounded-lg p-8 flex flex-col items-center justify-center bg-online-blue-600/20 hover:bg-online-blue-600/30 transition-colors cursor-pointer"
         onDrop={handleDrop}
         onDragOver={handleDragOver}
       >
         <input
           type="file"
-          multiple
+          multiple={multiple}
           onChange={handleFileChange}
           className="hidden"
           id="file-input"
+          accept=".pdf,.png,.jpg,.jpeg"
         />
         <label
           htmlFor="file-input"
-          className="cursor-pointer text-gray-400 w-full h-full flex justify-center items-center"
+          className="cursor-pointer flex flex-col items-center"
         >
-          Klikk her eller dra filer hit for å laste opp
+          <CloudArrowUpIcon className="w-12 h-12 text-online-blue-300 mb-3" />
+          <span className="text-white font-medium mb-1">
+            Klikk for a laste opp
+          </span>
+          <span className="text-online-blue-300 text-sm">
+            eller dra og slipp filer her
+          </span>
+          <span className="text-online-blue-400 text-xs mt-2">
+            PDF, PNG, JPG (maks 10MB)
+          </span>
         </label>
       </div>
-      <div>
-        <ul className="mt-4 w-full">
+
+      {files.length > 0 && (
+        <ul className="mt-4 space-y-2">
           {files.map((file, index) => (
             <li
               key={index}
-              className="flex justify-between items-center p-2 border-b border-gray-200"
+              className="flex justify-between items-center p-3 bg-online-blue-600/30 rounded-lg"
             >
-              <span className="text-white">{file.name}</span>
+              <span className="text-white text-sm truncate flex-1 mr-4">
+                {file.name}
+              </span>
               <button
                 onClick={() => removeFile(index)}
-                className="text-red-500 hover:text-red-700"
+                className="text-online-orange hover:text-online-orange-300 transition-colors p-1"
               >
-                Fjern
+                <XMarkIcon className="w-5 h-5" />
               </button>
             </li>
           ))}
         </ul>
-      </div>
+      )}
     </div>
   );
 };
